@@ -1,8 +1,10 @@
 import { supabase } from "../supabase/client"
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import TaskForm from "../components/TaskForm";
+
 export default function Home() {
-    
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +19,7 @@ export default function Home() {
             <button onClick={() => supabase.auth.signOut()}>
                 Logout
             </button>
+            <TaskForm/>
         </div>
 
     )
