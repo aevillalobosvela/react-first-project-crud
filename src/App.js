@@ -1,20 +1,21 @@
 import './App.css';
 import { useEffect } from 'react';
-import { Routes, Route , useNavigate} from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Login from './pages/Login';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { supabase } from './supabase/client'
+import { TaskContextProvider } from './context/TaskContext';
 
 function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (!session){
+      if (!session) {
         console.log("sesion NO activa")
         navigate('/login')
-      }else{
+      } else {
         console.log("sesion activa")
         navigate('/')
       }
@@ -23,11 +24,13 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <TaskContextProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TaskContextProvider>
     </div>
   );
 }
