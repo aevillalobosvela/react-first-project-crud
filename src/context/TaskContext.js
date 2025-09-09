@@ -5,7 +5,7 @@ export const TaskContext = createContext();
 export const useTasks = () => {
     const context = useContext(TaskContext)
 
-    if (!context) throw new Error('asd')
+    if (!context) throw new Error('este es un')
 
     return context
 }
