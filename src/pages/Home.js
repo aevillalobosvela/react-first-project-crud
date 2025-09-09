@@ -2,13 +2,12 @@ import { supabase } from "../supabase/client"
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import TaskForm from "../components/TaskForm";
-import { useTasks } from "../context/TaskContext";
+import TaskList from "../components/TaskList";
 
 export default function Home() {
 
     const navigate = useNavigate();
-    const obj = useTasks();
-    console.log('obj :', obj);
+
     useEffect(() => {
         if (!supabase.auth.getUser()) {
             navigate("/login")
@@ -22,6 +21,7 @@ export default function Home() {
                 Logout
             </button>
             <TaskForm />
+            <TaskList />
         </div>
 
     )

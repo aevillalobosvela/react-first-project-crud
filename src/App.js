@@ -13,10 +13,8 @@ function App() {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        console.log("sesion NO activa")
         navigate('/login')
       } else {
-        console.log("sesion activa")
         navigate('/')
       }
     })
