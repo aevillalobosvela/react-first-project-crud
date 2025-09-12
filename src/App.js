@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { supabase } from './supabase/client'
 import { TaskContextProvider } from './context/TaskContext';
+import NavBar from './components/NavBar';
 
 function App() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
   return (
     <div className="App">
       <TaskContextProvider>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
