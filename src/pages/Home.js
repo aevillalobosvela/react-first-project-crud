@@ -1,11 +1,11 @@
 import { supabase } from "../supabase/client"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 
 export default function Home() {
-
+    const [showTaskDone, setShowTaskDone] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,7 +21,14 @@ export default function Home() {
                 Logout
             </button>
             <TaskForm />
-            <TaskList />
+            <header>
+                <span>
+                    <p>Mostrar otras Tareas</p>
+                    <button onClick={() => setShowTaskDone(!showTaskDone)}>Mostrar</button>
+                </span>
+            </header>
+
+            <TaskList done={showTaskDone} />
         </div>
 
     )

@@ -3,13 +3,13 @@ import { useTasks } from '../context/TaskContext';
 
 export default function TaskCard({ task }) {
 
-    const { deleteTask } = useTasks()
+    const { deleteTask ,updateTask} = useTasks()
 
     const handleDelete = () => {
         deleteTask(task.id);
     }
     const handleDone = () => {
-        console.log("Done");
+        updateTask(task.id, { done: !task.done })
     }
 
     return (

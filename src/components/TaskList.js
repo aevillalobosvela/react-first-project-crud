@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { useTasks } from "../context/TaskContext";
 import TaskCard from './TaskCard';
 
-export default function TaskList() {
+export default function TaskList({ done = false }) {
     const { tasks, getTasks, loading } = useTasks();
 
     useEffect(() => {
-        getTasks();
-    }, [])
+        getTasks(done);
+    }, [done])
 
     function renderTasks() {
         if (loading) return (<h1>Loading...</h1>)
@@ -16,7 +16,7 @@ export default function TaskList() {
         else {
             return (
                 <div>
-                    <h1>TaskList</h1>
+                    <h1>{done ? "Tareas Completadas" : "Tareas Pendientes"}</h1>
                     {tasks.map(task => (
                         <TaskCard task={task} key={task.id} />
                     ))}

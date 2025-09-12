@@ -21,11 +21,10 @@ export const TaskContextProvider = ({ children }) => {
         setLoading(true)
         const { data: { user }, error: userError } = await supabase.auth.getUser();
         if (userError) throw userError;
-        console.log(user)
         const { error, data } = await supabase.from('tasks').select().eq('userId', user.id).eq("done", done);
-
         if (error) throw error;
-
+        console.log(done)
+        console.log(data)
         setTasks(data)
         setLoading(false)
     }
@@ -51,7 +50,7 @@ export const TaskContextProvider = ({ children }) => {
 
     const deleteTask = async (id) => {
         try {
-            const { error,data } = await supabase.from('tasks').delete().eq('id', id);
+            const { error, data } = await supabase.from('tasks').delete().eq('id', id);
             if (error) throw error;
             console.log(data)
             setTasks(tasks.filter(task => task.id !== id))
@@ -60,7 +59,18 @@ export const TaskContextProvider = ({ children }) => {
         }
     }
 
-    return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding , loading, deleteTask}}>
+    const updateTask = async (id, task) => {
+        try {
+            const { error, data } = await supabase.from('tasks').update(task).eq('id', id);
+            if (error) throw error;
+            console.log(data)
+            setTasks(tasks.map(t => t.id === id ? { ...t, ...task } : t))
+        } catch (error) {
+            console.log('error :', error);
+        }
+    }
+
+    return <TaskContext.Provider value={{ tasks, getTasks, createTask, adding, loading, deleteTask, updateTask }}>
         {children}
     </TaskContext.Provider>
 }
